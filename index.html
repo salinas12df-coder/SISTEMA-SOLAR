@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f68"><title>Repaso del Sistema Solar</title>
+<style>
+:root{--g:#087f68;--g2:#13a783;--mint:#e8f8f2;--blue:#edf5ff;--ink:#19352f;--muted:#63766f;--red:#d9534f}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(145deg,#e9f8f1,#edf5ff);color:var(--ink)}
+header{background:linear-gradient(120deg,#087f68,#13a783);color:white;padding:24px 16px 28px;text-align:center;border-radius:0 0 26px 26px;box-shadow:0 8px 25px #087f6825}
+header h1{margin:0 0 7px;font-size:clamp(23px,5vw,33px)}header p{margin:0}
+.wrap{max-width:960px;margin:18px auto;padding:0 13px 35px}
+.nav{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0}
+.nav button{border:0;border-radius:13px;padding:11px 5px;background:white;color:var(--g);font-weight:bold;box-shadow:0 3px 12px #173c2d12;cursor:pointer}
+.nav button.active{background:var(--g);color:white}
+.panel{background:white;border-radius:19px;padding:18px;margin-bottom:14px;box-shadow:0 7px 24px #173c2d12}
+h2{font-size:21px;margin:0 0 13px}h3{font-size:16px;margin:0 0 10px}
+.small{font-size:13px;color:var(--muted);line-height:1.45}
+.topicgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.topic{border:1px solid #dceee6;background:linear-gradient(140deg,#f5fcf8,#f0f6ff);border-radius:15px;padding:13px;text-align:left;cursor:pointer;color:var(--ink);min-height:94px}
+.topic .emoji{font-size:24px;display:block;margin-bottom:7px}.topic b{display:block;font-size:14px;line-height:1.3}.topic small{display:block;color:var(--muted);margin-top:5px}
+select,input{width:100%;padding:12px;border:1px solid #d6e6df;border-radius:11px;background:#fbfefd;color:var(--ink);font-size:15px;margin:6px 0 12px}
+button{font:inherit}.primary,.secondary,.choice{border:0;border-radius:12px;padding:12px 14px;cursor:pointer;font-weight:700}
+.primary{background:var(--g);color:white}.secondary{background:var(--mint);color:var(--g)}.choice{width:100%;text-align:left;background:#f2f7f5;color:var(--ink);border:2px solid transparent}
+.choice.correct{background:#e3f7e9;border-color:#35a765}.choice.wrong{background:#fff0ef;border-color:#df7771}
+.choice:disabled{cursor:default}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+.progress{height:9px;background:#e8efec;border-radius:20px;overflow:hidden;margin:12px 0}.progress div{height:100%;background:var(--g);width:0}
+.question{font-size:19px;line-height:1.4;font-weight:700;margin:16px 0}.options{display:grid;gap:9px}
+.feedback{padding:13px;border-radius:12px;margin-top:12px;line-height:1.45}.good{background:#e7f8ec;color:#17683a}.bad{background:#fff1ed;color:#963d32}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.stat{background:var(--mint);border-radius:13px;padding:11px;text-align:center}.stat b{display:block;font-size:22px;color:var(--g)}.stat span{font-size:12px;color:var(--muted)}
+.flash{min-height:175px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:linear-gradient(140deg,#f0fbf6,#eef5ff);border-radius:16px;padding:20px;cursor:pointer}
+.answer{margin-top:12px;color:#176b55;line-height:1.5}.tag{display:inline-block;background:var(--mint);color:var(--g);border-radius:20px;padding:4px 9px;font-size:11px;font-weight:bold;margin-bottom:8px}
+.listitem{padding:12px 0;border-bottom:1px solid #edf1ef;line-height:1.45}.listitem:last-child{border:0}.hidden{display:none!important}.footer{text-align:center;color:var(--muted);font-size:12px;padding:10px}
+
+.summary-title{color:#087f68;text-align:center;font-size:23px;line-height:1.3;margin:5px 0 18px}
+.summary-main{color:#1765a8;font-size:19px;margin:22px 0 10px;padding-bottom:7px;border-bottom:2px solid #d9eafa}
+.summary-sub{color:#a45b12;font-size:16px;margin:16px 0 7px}
+.summary-minor{color:#7650a5;font-size:15px;margin:13px 0 6px}
+.summary-text{line-height:1.58;margin:6px 0 10px}
+.summary-list{padding-left:21px;line-height:1.55;margin:6px 0 12px}
+.summary-label{color:#087f68;font-weight:bold}
+.summary-card{background:#fbfefd;border:1px solid #e1eee8;border-radius:14px;padding:14px;margin:12px 0}
+@media(max-width:540px){.nav{grid-template-columns:repeat(3,1fr)}.topicgrid{grid-template-columns:1fr}.panel{padding:15px}.stats{gap:5px}.stat{padding:8px 3px}}
+</style></head>
+<body>
+<header><h1>🌎 REPASO DEL SISTEMA SOLAR</h1><p>Estudia por partes y practica para tu examen</p></header>
+<div class="wrap">
+<div class="nav">
+<button class="active" data-view="topics">🧭 Temas</button>
+<button data-view="quiz">📝 Examen</button>
+<button data-view="cards">📚 Tarjetas</button>
+<button data-view="bank">📖 Preguntas</button>
+<button data-view="result">🏆 Resultado</button><button data-view="summary">📄 Resumen</button>
+</div>
+
+<section id="topics" class="panel">
+<h2>Entra directamente a cada subtítulo</h2>
+<p class="small">Selecciona el tema que deseas estudiar. Cada botón abre las preguntas de esa parte.</p>
+<div class="topicgrid" id="topicGrid"></div>
+</section>
+
+<section id="quiz" class="panel hidden">
+<h2 id="quizTitle">📝 Examen de práctica</h2>
+<div class="stats"><div class="stat"><b id="done">0</b><span>Respondidas</span></div><div class="stat"><b id="right">0</b><span>Correctas</span></div><div class="stat"><b id="percent">0%</b><span>Avance correcto</span></div></div>
+<div class="progress"><div id="bar"></div></div><div class="small" id="counter">Pregunta 1</div>
+<div class="question" id="qText"></div><div class="options" id="options"></div><div id="feedback"></div>
+<div class="row" style="margin-top:14px"><button class="secondary" id="prev">← Anterior</button><button class="primary" id="next">Siguiente →</button></div>
+<div class="row" style="margin-top:9px"><button class="secondary" id="restart">↻ Reiniciar este tema</button><button class="secondary" id="goResult">🏆 Ver resultado final</button></div>
+</section>
+
+<section id="cards" class="panel hidden">
+<h2>📚 Tarjetas para memorizar</h2><p class="small">Piensa la respuesta y toca la tarjeta para descubrirla.</p>
+<select id="cardTopic"></select><div class="flash" id="flash"><span class="tag" id="cardTag"></span><div class="question" id="cardQ"></div><div class="answer hidden" id="cardA"></div><span class="small" id="hint">Toca para ver la respuesta</span></div>
+<div class="row" style="margin-top:12px"><button class="secondary" id="cardPrev">← Anterior</button><button class="primary" id="flip">Ver respuesta</button><button class="secondary" id="cardNext">Siguiente →</button></div><p class="small" id="cardCount" style="text-align:center"></p>
+</section>
+
+<section id="bank" class="panel hidden">
+<h2>📖 Todas las preguntas y respuestas</h2><input id="search" type="search" placeholder="🔎 Buscar una pregunta..."><select id="bankTopic"></select><div id="bankList"></div>
+</section>
+
+<section id="result" class="panel hidden">
+<h2>🏆 Resultado final</h2><p class="small">Aquí puedes revisar tu resultado del tema que practicaste. No es un promedio: muestra tus respuestas correctas sobre el total de preguntas contestadas.</p>
+<div class="stats"><div class="stat"><b id="finalCorrect">0</b><span>Correctas</span></div><div class="stat"><b id="finalWrong">0</b><span>Incorrectas</span></div><div class="stat"><b id="finalTotal">0</b><span>Contestadas</span></div></div>
+<div class="feedback good" id="finalMessage">Todavía no has respondido preguntas. ¡Empieza a practicar!</div>
+<button class="primary" style="width:100%;margin-top:12px" id="backTopics">🧭 Volver a los temas</button>
+</section>
+
+<section id="summary" class="panel hidden">
+<h2 class="summary-title">INCIDENCIA DE LA ASTRONOMÍA EN LA NATURALEZA: EL SISTEMA SOLAR</h2>
+<h3 class="summary-main">1. Estructura y órbitas de los objetos del sistema solar, los periodos siderales y sinódicos</h3>
+<p class="summary-text">La astronomía estudia los cuerpos celestes y el universo.</p>
+<h4 class="summary-minor">1.1. Estructura y órbitas del sistema solar</h4>
+<p class="summary-text">El sistema solar está formado por el Sol y los cuerpos que giran a su alrededor.</p>
+<ul class="summary-list"><li><b>Interior:</b> Mercurio, Venus, Tierra y Marte.</li><li><b>Exterior:</b> Júpiter, Saturno, Urano y Neptuno.</li></ul>
+<p class="summary-text"><b>Órbita:</b> recorrido de un cuerpo celeste alrededor de otro.</p>
+<h4 class="summary-minor">1.2. Periodos siderales</h4>
+<p class="summary-text">Tiempo que tarda un cuerpo en completar una órbita respecto a una estrella fija. La Tierra tarda 365,25 días.</p>
+<h4 class="summary-minor">1.3. Periodos sinódicos</h4>
+<p class="summary-text">Tiempo que tarda un cuerpo en volver a la misma posición respecto al Sol. La Luna tarda 29,53 días.</p>
+
+<h3 class="summary-main">2. El Sol: estructura, composición, rotación solar, relación Tierra-Sol</h3>
+<p class="summary-text">El Sol es una estrella formada principalmente por hidrógeno y helio, esencial para la vida.</p>
+<h4 class="summary-minor">a) Estructura del Sol</h4>
+<ul class="summary-list"><li><b>Núcleo:</b> produce energía.</li><li><b>Capa radiactiva:</b> transporta energía.</li><li><b>Capa convectiva:</b> mueve gases calientes.</li><li><b>Fotosfera:</b> superficie visible.</li><li><b>Cromosfera y corona:</b> capas externas.</li></ul>
+<h4 class="summary-minor">Rotación solar</h4>
+<p class="summary-text">El Sol gira sobre su eje aproximadamente cada 27 días.</p>
+<h4 class="summary-minor">Relación Tierra-Sol</h4>
+<p class="summary-text">La rotación de la Tierra produce el día y la noche. Su inclinación de 23,5° influye en las estaciones.</p>
+
+<h3 class="summary-main">3. Principales movimientos de la Tierra</h3>
+<p class="summary-text">La Tierra realiza dos movimientos principales:</p>
+<h4 class="summary-minor">3.1. Movimiento de rotación</h4>
+<p class="summary-text">Giro sobre su eje que dura 24 horas y produce el día y la noche.</p>
+<h4 class="summary-minor">3.2. Movimiento de traslación</h4>
+<p class="summary-text">Movimiento alrededor del Sol que dura 365 días y 6 horas. Junto con la inclinación terrestre produce las estaciones.</p>
+<p class="summary-text"><b>Otros movimientos:</b></p>
+<ul class="summary-list"><li><b>Precesión:</b> movimiento lento del eje terrestre.</li><li><b>Nutación:</b> pequeña oscilación del eje.</li><li><b>Bamboleo de Chandler:</b> pequeño movimiento del eje terrestre.</li></ul>
+
+<h3 class="summary-main">4. La Luna</h3>
+<p class="summary-text">Es el único satélite natural de la Tierra. Tiene cráteres y su gravedad influye en las mareas.</p>
+<h4 class="summary-minor">4.1. Fases de la Luna</h4>
+<p class="summary-text">Son los cambios de su parte iluminada. Su ciclo dura aproximadamente 29 días y medio.</p>
+<ul class="summary-list"><li><b>Luna nueva:</b> no es visible.</li><li><b>Cuarto creciente:</b> aumenta su iluminación.</li><li><b>Luna llena:</b> está completamente iluminada.</li><li><b>Cuarto menguante:</b> disminuye su iluminación.</li></ul>
+</section>
+
+<div class="footer">Basado en el material de clase: “Incidencia de la astronomía en la naturaleza: el sistema solar”.</div>
+</div>
+<script>
+const data = [
+["Astronomía","¿Qué estudia la astronomía?","Estudia los cuerpos celestes y los fenómenos del universo.",["Los seres vivos","Los cuerpos celestes","Solamente el clima"]],
+["Astronomía","¿Qué nos ha ayudado a comprender la astronomía?","Los misterios del cosmos, desde la antigüedad hasta la actualidad.",["La composición del suelo","Los misterios del cosmos","La historia de los continentes"]],
+["Sistema solar","¿Hace cuánto tiempo se formó el sistema solar, según el texto?","Hace más de 4.500 millones de años.",["Hace 500 años","Hace 4.500 millones de años","Hace 365 días"]],
+["Sistema solar","¿De qué se formó el sistema solar?","De una densa nube de gas y polvo interestelar.",["De rocas solamente","De agua y hielo","De una nube de gas y polvo interestelar"]],
+["Sistema solar","¿Qué mantiene a los planetas orbitando alrededor del Sol?","La gravedad del Sol.",["La luz de la Luna","La gravedad del Sol","El viento"]],
+["Sistema solar","¿Qué porcentaje aproximado de la masa del sistema solar concentra el Sol?","Más del 99,85 %.",["50 %","75 %","Más del 99,85 %"]],
+["Sistema solar","¿Cuáles son los planetas del sistema solar interior?","Mercurio, Venus, Tierra y Marte.",["Júpiter, Saturno, Urano y Neptuno","Mercurio, Venus, Tierra y Marte","Tierra, Júpiter, Saturno y Plutón"]],
+["Sistema solar","¿Cuáles son los planetas del sistema solar exterior?","Júpiter, Saturno, Urano y Neptuno.",["Mercurio, Venus, Tierra y Marte","Júpiter, Saturno, Urano y Neptuno","Plutón, Eris, Makemake y Haumea"]],
+["Sistema solar","¿Dónde se encuentra el cinturón de Kuiper?","Más allá de los planetas.",["Entre la Tierra y Marte","Dentro del Sol","Más allá de los planetas"]],
+["Sistema solar","¿Qué cuerpos se mencionan como planetas enanos del cinturón de Kuiper?","Plutón, Eris, Makemake y Haumea.",["Mercurio, Venus y Marte","Plutón, Eris, Makemake y Haumea","Júpiter y Saturno"]],
+["Órbita","¿Qué es una órbita?","Es la trayectoria que recorre un cuerpo en el espacio alrededor de otro por acción de la gravedad.",["El tamaño de un planeta","La trayectoria de un cuerpo en el espacio","La temperatura de una estrella"]],
+["Órbita","¿Qué forma tienen las órbitas planetarias según Kepler?","Son elípticas, no circulares.",["Cuadradas","Elípticas","Siempre rectas"]],
+["Órbita","¿Cómo es la velocidad orbital de un planeta cuando está más cerca del Sol?","Es mayor.",["Es menor","Es mayor","No se mueve"]],
+["Órbita","¿Cómo es la velocidad orbital de un planeta cuando está más alejado del Sol?","Es más lenta.",["Es más rápida","Es más lenta","Es siempre igual"]],
+["Periodo sideral","¿Qué es el periodo sideral?","Es el tiempo que tarda un cuerpo celeste en completar una órbita respecto a una estrella fija.",["El tiempo de un día","El tiempo de una fase lunar","El tiempo de una órbita respecto a una estrella fija"]],
+["Periodo sideral","¿Cuánto dura aproximadamente el periodo sideral de la Tierra?","365,25 días.",["29,53 días","365,25 días","24 horas"]],
+["Periodo sideral","¿Respecto a qué se mide el periodo sideral?","Respecto a una estrella fija como punto de referencia.",["Respecto a una montaña","Respecto a una estrella fija","Respecto a las nubes"]],
+["Periodo sinódico","¿Qué es el periodo sinódico?","Es el tiempo que tarda un cuerpo celeste en volver a una misma posición respecto al Sol, observado desde la Tierra.",["El tiempo que tarda en girar sobre su eje","El tiempo para volver a una posición respecto al Sol, visto desde la Tierra","El tiempo que tarda el Sol en formarse"]],
+["Periodo sinódico","¿Cuánto dura el periodo sinódico de la Luna?","Aproximadamente 29,53 días.",["365,25 días","24 horas","29,53 días"]],
+["Periodo sinódico","¿Qué permite observar el periodo sinódico lunar?","Que la Luna vuelva a aparecer en la misma fase vista desde la Tierra.",["Que cambie de planeta","Que vuelva a aparecer en la misma fase","Que desaparezca para siempre"]],
+["El Sol","¿Qué elementos componen principalmente el Sol?","Hidrógeno (71 %) y helio (27 %), además de otros elementos.",["Oxígeno y nitrógeno","Hidrógeno y helio","Hierro y agua"]],
+["El Sol","¿Qué porcentaje aproximado de hidrógeno tiene el Sol según el texto?","71 %.",["27 %","71 %","99 %"]],
+["El Sol","¿Qué porcentaje aproximado de helio tiene el Sol según el texto?","27 %.",["71 %","27 %","50 %"]],
+["El Sol","¿En qué estado se mantiene el Sol debido a sus altas temperaturas?","En estado de plasma.",["En estado sólido","En estado líquido","En estado de plasma"]],
+["El Sol","¿Qué edad aproximada tiene el Sol según el documento?","Aproximadamente 5.000 millones de años.",["5.000 años","500 millones de años","5.000 millones de años"]],
+["Estructura del Sol","¿Cuántas capas principales tiene el Sol?","Cuatro capas principales.",["Dos","Cuatro","Seis"]],
+["Estructura del Sol","¿Cuál es la capa más interna del Sol?","El núcleo.",["La corona","La fotosfera","El núcleo"]],
+["Estructura del Sol","¿Qué ocurre en el núcleo del Sol?","Se produce energía mediante procesos de fusión termonuclear.",["Se forman los planetas","Se produce energía mediante fusión termonuclear","Se forman las mareas"]],
+["Estructura del Sol","¿Qué capa rodea al núcleo?","La capa radiactiva.",["La corona","La capa radiactiva","La fotosfera"]],
+["Estructura del Sol","¿Qué característica tiene la capa radiactiva?","Es gaseosa y muy densa; allí las temperaturas alcanzan 130.000 K.",["Es fría y sólida","Es gaseosa y muy densa","Es la superficie visible"]],
+["Estructura del Sol","¿Qué caracteriza a la capa convectiva?","Tiene plasma y gases muy calientes que circulan entre la zona radiactiva y la superficie.",["Tiene agua líquida","Tiene gases fríos","Tiene plasma y gases muy calientes en circulación"]],
+["Estructura del Sol","¿Cuál es la zona visible del Sol?","La fotosfera.",["El núcleo","La fotosfera","La corona"]],
+["Estructura del Sol","¿Qué temperatura aproximada tiene la fotosfera?","Cerca de 5.800 K.",["130.000 K","5.800 K","Un millón de grados"]],
+["Estructura del Sol","¿Qué fenómenos se encuentran en la fotosfera?","Manchas solares y erupciones solares.",["Mareas y eclipses","Manchas solares y erupciones solares","Lluvias y vientos"]],
+["Estructura del Sol","¿Qué es la cromosfera?","Es una capa gaseosa que se observa con un color rojizo y anaranjado.",["La parte más interna","Una capa gaseosa rojiza y anaranjada","Un planeta"]],
+["Estructura del Sol","¿Cuándo es visible la cromosfera?","Durante los eclipses solares.",["Durante la noche","Durante los eclipses solares","En las estaciones"]],
+["Estructura del Sol","¿Qué es la corona solar?","Es un halo tenue de la atmósfera solar que se observa durante un eclipse total.",["La superficie sólida del Sol","Un halo tenue de la atmósfera solar","El centro del Sol"]],
+["Estructura del Sol","¿Qué temperatura puede alcanzar la corona?","Millones de grados Celsius.",["Cero grados","5.800 grados","Millones de grados Celsius"]],
+["Rotación solar","¿Cómo gira el Sol sobre su propio eje?","De forma diferenciada, a distintas velocidades según la latitud.",["A la misma velocidad en todas partes","De forma diferenciada","No gira"]],
+["Rotación solar","¿En qué parte del Sol gira más rápido?","Cerca de su ecuador.",["En los polos","Cerca de su ecuador","En la corona solamente"]],
+["Rotación solar","¿En qué parte del Sol gira más lento?","Cerca de los polos.",["Cerca de los polos","En el ecuador","En todas partes igual"]],
+["Rotación solar","¿Cuánto dura aproximadamente la rotación media del Sol?","27 días.",["24 horas","27 días","365 días"]],
+["Rotación solar","¿Cuánto puede durar la rotación de la región ecuatorial del Sol?","Entre 25 días.",["25 días","18,6 años","365 días"]],
+["Tierra y Sol","¿Cuánto tarda la Tierra en girar sobre su eje?","Aproximadamente 24 horas.",["12 horas","24 horas","365 días"]],
+["Tierra y Sol","¿De qué a qué gira la Tierra sobre su eje?","De oeste a este.",["De norte a sur","De este a oeste","De oeste a este"]],
+["Tierra y Sol","¿Qué inclinación tiene el eje terrestre respecto al plano orbital?","23,5°.",["10°","23,5°","45°"]],
+["Tierra y Sol","¿Qué influye en las estaciones del año?","La inclinación de la Tierra y su movimiento alrededor del Sol.",["La Luna solamente","La inclinación terrestre y su traslación","Las estrellas"]],
+["Tierra y Sol","¿Qué permite la energía solar a las plantas?","Sintetizar alimentos mediante la fotosíntesis.",["Producir luz artificial","Sintetizar alimentos mediante la fotosíntesis","Girar sobre su eje"]],
+["Tierra y Sol","¿Qué ocurriría con la Tierra sin la luz y el calor del Sol, según el texto?","Sería un lugar frío y oscuro.",["Sería más caliente","Sería un lugar frío y oscuro","No cambiaría nada"]],
+["Movimientos terrestres","¿Cuáles son los dos movimientos principales de la Tierra?","Rotación y traslación.",["Nutación y precisión","Rotación y traslación","Eclipse y órbita"]],
+["Rotación","¿Qué es el movimiento de rotación?","Es el giro de la Tierra sobre su propio eje.",["El giro alrededor del Sol","El giro de la Tierra sobre su propio eje","El movimiento de la Luna"]],
+["Rotación","¿En qué dirección realiza la Tierra su rotación?","De oeste a este.",["De este a oeste","De norte a sur","De oeste a este"]],
+["Rotación","¿Qué produce el movimiento de rotación?","El día y la noche.",["Las fases de la Luna","El día y la noche","El año bisiesto"]],
+["Rotación","¿Cuánto dura la rotación terrestre tomando como referencia las estrellas, según el texto?","23 horas, 54 minutos y 4 segundos.",["24 horas exactas","23 horas, 54 minutos y 4 segundos","365 días"]],
+["Traslación","¿Qué es el movimiento de traslación?","Es el movimiento de la Tierra alrededor del Sol en una trayectoria elíptica.",["El giro de la Tierra sobre su eje","El movimiento alrededor del Sol","El movimiento de la Luna alrededor de la Tierra"]],
+["Traslación","¿Cuánto dura el movimiento de traslación?","365 días y 6 horas.",["29,53 días","24 horas","365 días y 6 horas"]],
+["Traslación","¿Por qué existe el año bisiesto?","Porque cada cuatro años se agrega un día para compensar las seis horas acumuladas por año.",["Porque la Luna cambia de fase","Por las seis horas acumuladas cada año","Porque el Sol se detiene"]],
+["Traslación","¿Qué trayectoria sigue la Tierra alrededor del Sol?","Una trayectoria elíptica.",["Circular perfecta","Elíptica","Recta"]],
+["Traslación","¿Qué movimientos, junto con la inclinación terrestre, permiten las estaciones?","La traslación de la Tierra alrededor del Sol y su inclinación.",["La rotación de la Luna","La traslación y la inclinación terrestre","La nutación solamente"]],
+["Otros movimientos","¿Qué es la precisión?","Es el movimiento lento del eje de rotación terrestre sobre su propio eje.",["El giro diario de la Tierra","El movimiento lento del eje terrestre","El movimiento de las mareas"]],
+["Otros movimientos","¿Cuánto tarda aproximadamente la precisión?","Unos 26.000 años.",["18,6 años","26.000 años","365 días"]],
+["Otros movimientos","¿Qué es la nutación?","Es el movimiento en que el eje terrestre oscila de lado a lado.",["El movimiento de la Tierra alrededor del Sol","La oscilación del eje terrestre de lado a lado","El giro del Sol"]],
+["Otros movimientos","¿Cuánto tarda aproximadamente la nutación?","Unos 18,6 años.",["18,6 años","26.000 años","29,53 días"]],
+["Otros movimientos","¿Qué es el bamboleo de Chandler?","Es un movimiento en el que el eje de rotación terrestre se desplaza ligeramente hacia adelante y hacia atrás.",["Una fase lunar","Un movimiento del eje terrestre hacia adelante y atrás","Una capa del Sol"]],
+["La Luna","¿Qué es la Luna?","Es el único satélite natural de la Tierra.",["Una estrella","El único satélite natural de la Tierra","Un planeta enano"]],
+["La Luna","¿A qué distancia aproximada se encuentra la Luna de la Tierra según el texto?","A 385.000 km.",["A 38.500 km","A 385.000 km","A 3.850.000 km"]],
+["La Luna","¿Cómo es la superficie de la Luna?","Es rocosa y presenta numerosos cráteres.",["Tiene grandes océanos","Es rocosa y presenta numerosos cráteres","Está cubierta de vegetación"]],
+["La Luna","¿La Luna tiene atmósfera y agua líquida?","No, carece de atmósfera y agua líquida.",["Sí, ambas","Tiene atmósfera pero no agua","No, carece de ambas"]],
+["La Luna","¿Cuál es la gravedad de la Luna indicada en el documento?","1,32 m/s².",["9,8 m/s²","1,32 m/s²","23,5 m/s²"]],
+["La Luna","¿Cómo influye la Luna en las mareas?","Su atracción gravitacional influye en el nivel de las mareas.",["Por su luz","Por su atracción gravitacional","Por su temperatura"]],
+["Fases de la Luna","¿Qué son las fases de la Luna?","Son los cambios aparentes de la porción iluminada de la Luna.",["Los cambios de tamaño real de la Luna","Los cambios aparentes de su parte iluminada","Los movimientos del Sol"]],
+["Fases de la Luna","¿Por qué se producen las fases lunares?","Por el cambio de posición de la Luna respecto a la Tierra y al Sol.",["Por las nubes","Por su posición respecto a la Tierra y al Sol","Por el movimiento de Marte"]],
+["Fases de la Luna","¿Cuánto dura aproximadamente el ciclo completo de fases lunares?","29 días, 12 horas, 44 minutos y 2,9 segundos.",["365 días","24 horas","29 días, 12 horas, 44 minutos y 2,9 segundos"]],
+["Fases de la Luna","¿Qué ocurre durante la Luna nueva?","La Luna se ubica entre la Tierra y el Sol y su lado iluminado no es visible.",["Está completamente iluminada","Se ubica entre la Tierra y el Sol y no es visible","Está en cuarto menguante"]],
+["Fases de la Luna","¿Qué ocurre durante el cuarto creciente?","La Luna se ve medio iluminada y aumenta su iluminación hasta llegar a Luna llena.",["La iluminación disminuye","Se ve medio iluminada y aumenta su iluminación","No se observa nunca"]],
+["Fases de la Luna","¿Qué ocurre durante la Luna llena?","La cara visible de la Luna está completamente iluminada.",["La Luna no es visible","La cara visible está completamente iluminada","Solo se ilumina la mitad"]],
+["Fases de la Luna","¿Qué ocurre durante el cuarto menguante?","La parte iluminada va disminuyendo hasta comenzar nuevamente la Luna nueva.",["La iluminación aumenta","La Luna desaparece para siempre","La parte iluminada disminuye"]],
+["Eclipses","¿Qué fenómeno se trabaja en la práctica del documento?","Los eclipses solares.",["Los terremotos","Los eclipses solares","Las estaciones del año"]],
+["Eclipses","¿Qué materiales se utilizan en la práctica para representar el eclipse?","Una linterna o proyector, lámina de la Tierra, representación de la Luna, brocheta y pegamento.",["Un telescopio y una brújula","Una linterna o proyector, representaciones de la Tierra y la Luna, brocheta y pegamento","Un termómetro y agua"]],
+["Eclipses","¿A qué distancia se pasa la representación de la Luna respecto a la fuente de luz en la práctica?","A 50 cm.",["5 cm","50 cm","500 cm"]]
+];
+const topics=[
+{title:"1. Estructura y órbitas de los objetos del sistema solar, los periodos siderales y sinódicos",icon:"🪐",cats:["Astronomía","Sistema solar","Órbita","Periodo sideral","Periodo sinódico"],subs:["1.1. Estructura y órbitas del sistema solar","Órbita","1.2. Periodos siderales","1.3. Periodos sinódicos"]},
+{title:"2. El Sol: estructura, composición, rotación solar, relación Tierra-Sol",icon:"☀️",cats:["El Sol","Estructura del Sol","Rotación solar","Tierra y Sol"],subs:["a) Estructura del Sol","Rotación solar","Rotación de la Tierra y el Sol"]},
+{title:"3. Principales movimientos de la Tierra",icon:"🌍",cats:["Rotación","Traslación","Otros movimientos"],subs:["3.1. Movimiento de rotación","3.2. Movimiento de traslación","Precisión, nutación y bamboleo de Chandler"]},
+{title:"4. La Luna",icon:"🌙",cats:["La Luna","Fases de la Luna"],subs:["4.1. Fases de la Luna"]},
+{title:"Práctica: eclipses solares",icon:"🌘",cats:["Eclipses"],subs:["Experimento de los eclipses solares"]}
+];
+const $=id=>document.getElementById(id);
+let currentTopic=topics[0],pool=[],idx=0,answers={},cardPool=[...data],cardIdx=0,flipped=false;
+const allCats=["Todos los temas",...topics.map(t=>t.title)];
+function questionsFor(t){return data.filter(q=>t.cats.includes(q[0]))}
+function playSound(ok){
+ try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const ctx=new C(),now=ctx.currentTime;
+ const notes=ok?[523.25,659.25,783.99]:[220,165];
+ notes.forEach((f,i)=>{let o=ctx.createOscillator(),g=ctx.createGain();o.type=ok?"sine":"triangle";o.frequency.value=f;g.gain.setValueAtTime(.0001,now+i*.13);g.gain.exponentialRampToValueAtTime(.16,now+i*.13+.025);g.gain.exponentialRampToValueAtTime(.0001,now+i*.13+.18);o.connect(g);g.connect(ctx.destination);o.start(now+i*.13);o.stop(now+i*.13+.2)});setTimeout(()=>ctx.close(),800)}catch(e){}
+}
+function showView(id){document.querySelectorAll("section[id]").forEach(s=>s.classList.toggle("hidden",s.id!==id));document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===id));if(id==="result")renderResult()}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+function makeTopics(){
+ $("topicGrid").innerHTML=topics.map((t,i)=>`<button class="topic" data-topic="${i}"><span class="emoji">${t.icon}</span><b>${t.title}</b><small>${t.subs.join(" · ")}</small></button>`).join("");
+ document.querySelectorAll("[data-topic]").forEach(b=>b.onclick=()=>startTopic(topics[+b.dataset.topic]));
+}
+function startTopic(t){currentTopic=t;pool=questionsFor(t);idx=0;answers={};$("quizTitle").textContent=t.icon+" "+t.title;showView("quiz");renderQuiz()}
+function updateStats(){let vals=Object.values(answers),correct=vals.filter(a=>a.correct).length;$("done").textContent=vals.length;$("right").textContent=correct;$("percent").textContent=vals.length?Math.round(correct/vals.length*100)+"%":"0%"}
+function renderQuiz(){
+ if(!pool.length){$("qText").textContent="No hay preguntas en este tema.";return}
+ idx=Math.max(0,Math.min(idx,pool.length-1));let q=pool[idx],saved=answers[q[1]];
+ $("counter").textContent=`Pregunta ${idx+1} de ${pool.length}`;$("bar").style.width=((idx+1)/pool.length*100)+"%";$("qText").textContent=q[1];$("feedback").innerHTML="";
+ let opts=[...q[3]];if(!opts.includes(q[2]))opts[0]=q[2];
+ const extra=["La fotosíntesis","El cinturón de Kuiper","Las manchas solares","El movimiento de las mareas","La capa convectiva","El año bisiesto","La gravedad terrestre","La corona solar"];
+ let distractor=extra.find(x=>x!==q[2]&&!opts.includes(x));opts=[q[2],...opts.filter(x=>x!==q[2]),distractor].slice(0,4);
+ // Mezcla de opciones sin depender de servicios externos
+ opts=opts.map((v,i)=>({v,k:(idx*7+i*11+v.length)%17})).sort((a,b)=>a.k-b.k).map(x=>x.v);
+ $("options").innerHTML=opts.map((o,i)=>`<button class="choice" data-answer="${i}"><b>${"ABCD"[i]}.</b> ${o}</button>`).join("");
+ [...$("options").children].forEach(b=>{b.onclick=()=>choose(b.textContent.slice(3).trim(),q);if(saved){b.disabled=true;let val=b.textContent.slice(3).trim();if(val===q[2])b.classList.add("correct");if(val===saved.selected&&!saved.correct)b.classList.add("wrong")}});
+ if(saved)$("feedback").innerHTML=`<div class="feedback ${saved.correct?"good":"bad"}">${saved.correct?"¡Excelente! Respuesta correcta.":"Respuesta incorrecta. La respuesta correcta es:"} <b>${q[2]}</b></div>`;
+ $("prev").disabled=idx===0;$("next").textContent=idx===pool.length-1?"Finalizar tema":"Siguiente →";updateStats();
+}
+function choose(opt,q){if(answers[q[1]])return;let ok=opt===q[2];answers[q[1]]={correct:ok,selected:opt};playSound(ok);renderQuiz()}
+$("prev").onclick=()=>{idx--;renderQuiz()};
+$("next").onclick=()=>{if(idx<pool.length-1){idx++;renderQuiz()}else{showView("result")}};
+$("restart").onclick=()=>{idx=0;answers={};renderQuiz()};
+$("goResult").onclick=()=>showView("result");
+function renderResult(){let vals=Object.values(answers),right=vals.filter(x=>x.correct).length,wrong=vals.length-right;$("finalCorrect").textContent=right;$("finalWrong").textContent=wrong;$("finalTotal").textContent=vals.length;
+ $("finalMessage").className="feedback "+(vals.length&&right===vals.length?"good":"bad");
+ $("finalMessage").innerHTML=vals.length?`Terminaste <b>${currentTopic.title}</b>. Tu resultado es <b>${right} respuestas correctas de ${vals.length} contestadas</b>${wrong?`, y ${wrong} incorrectas.`:"."} ${right===vals.length?"¡Excelente trabajo!":"Sigue practicando para mejorar tu resultado."}`:"Todavía no has respondido preguntas. ¡Empieza a practicar!"}
+$("backTopics").onclick=()=>showView("topics");
+function fillTopicSelect(id){$(id).innerHTML='<option value="all">Todos los temas</option>'+topics.map((t,i)=>`<option value="${i}">${t.title}</option>`).join("")}
+fillTopicSelect("cardTopic");fillTopicSelect("bankTopic");
+function topicFilter(id){let v=$(id).value;return v==="all"?[...data]:questionsFor(topics[+v])}
+function renderCard(){cardPool=topicFilter("cardTopic");cardIdx=(cardIdx+cardPool.length)%cardPool.length;let q=cardPool[cardIdx];flipped=false;$("cardTag").textContent=q[0];$("cardQ").textContent=q[1];$("cardA").textContent=q[2];$("cardA").classList.add("hidden");$("hint").classList.remove("hidden");$("flip").textContent="Ver respuesta";$("cardCount").textContent=`Tarjeta ${cardIdx+1} de ${cardPool.length}`}
+function flip(){flipped=!flipped;$("cardA").classList.toggle("hidden",!flipped);$("hint").classList.toggle("hidden",flipped);$("flip").textContent=flipped?"Ocultar respuesta":"Ver respuesta"}
+$("cardTopic").onchange=()=>{cardIdx=0;renderCard()};$("flip").onclick=flip;$("flash").onclick=flip;$("cardPrev").onclick=()=>{cardIdx--;renderCard()};$("cardNext").onclick=()=>{cardIdx++;renderCard()};
+function renderBank(){let arr=topicFilter("bankTopic"),term=$("search").value.toLowerCase();arr=arr.filter(q=>(q[1]+" "+q[2]).toLowerCase().includes(term));$("bankList").innerHTML=arr.map((q,i)=>`<div class="listitem"><span class="tag">${q[0]}</span><b>${i+1}. ${q[1]}</b><br>${q[2]}</div>`).join("")||'<p class="small">No se encontraron preguntas.</p>'}
+$("bankTopic").onchange=renderBank;$("search").oninput=renderBank;
+makeTopics();renderCard();renderBank();
+</script></body></html>
